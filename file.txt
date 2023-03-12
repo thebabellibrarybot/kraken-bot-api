@@ -7,11 +7,11 @@ aws ecr-public get-login-password --region us-east-1 | docker login --username A
 
 
 
-aws ecr create-repository --repository-name pulled --image-scanning-configuration scanOnPush=true --image-tag-mutability MUTABLE
+aws ecr create-repository --repository-name slc_kraken --image-scanning-configuration scanOnPush=true --image-tag-mutability MUTABLE
 
-docker tag  pulled:latest 597268614173.dkr.ecr.us-east-1.amazonaws.com/pulled:latest
+docker tag  slc_kraken:latest 597268614173.dkr.ecr.us-east-1.amazonaws.com/slc_kraken:latest
 
-docker push 597268614173.dkr.ecr.us-east-1.amazonaws.com/pulled:latest        
+docker push 597268614173.dkr.ecr.us-east-1.amazonaws.com/slc_kraken:latest        
 
 
 
@@ -82,7 +82,7 @@ docker push 597268614173.dkr.ecr.us-east-1.amazonaws.com/pulled:latest
 
 test
 
-docker run -p 9000:8080 -e AWS_LAMBDA_RUNTIME_API=http://localhost:9001 \pulled:latest
+docker run -p 9000:8080 -e AWS_LAMBDA_RUNTIME_API=http://localhost:9001 \seg_line_crop:latest
 
 
 curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{"body": {"s3url": ["s3://my-bucket/my-file.txt"]}}'
@@ -91,7 +91,7 @@ curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d
 {
   "body": {
     "s3url": [
-      "http://fake.url"
+      "https://msm454.s3.amazonaws.com/fol.119_2R.jpg"
     ]
   }
 }

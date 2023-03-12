@@ -1,0 +1,104 @@
+cmds
+
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 597268614173.dkr.ecr.us-east-1.amazonaws.com    
+
+or for public: 
+aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
+
+
+
+aws ecr create-repository --repository-name pulled --image-scanning-configuration scanOnPush=true --image-tag-mutability MUTABLE
+
+docker tag  pulled:latest 597268614173.dkr.ecr.us-east-1.amazonaws.com/pulled:latest
+
+docker push 597268614173.dkr.ecr.us-east-1.amazonaws.com/pulled:latest        
+
+
+
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "new statement",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": [
+          "arn:aws:iam::597268614173:role/service-role/AWSApplicationMigrationAgentRole",
+          "arn:aws:iam::597268614173:role/service-role/AWSCodePipelineServiceRole-us-east-1-babelPrac",
+          "arn:aws:iam::597268614173:role/service-role/AWSApplicationMigrationLaunchInstanceWithDrsRole",
+          "arn:aws:iam::597268614173:role/aws-elasticbeanstalk-service-role",
+          "arn:aws:iam::597268614173:role/service-role/AWSApplicationMigrationMGHRole",
+          "arn:aws:iam::597268614173:role/service-role/AWSApplicationMigrationConversionServerRole",
+          "arn:aws:iam::597268614173:role/service-role/AWSApplicationMigrationReplicationServerRole",
+          "arn:aws:iam::597268614173:role/amplify-login-lambda-85c14bd7",
+          "arn:aws:iam::597268614173:role/service-role/AWSApplicationMigrationLaunchInstanceWithSsmRole",
+          "arn:aws:iam::597268614173:role/aws-elasticbeanstalk-ec2-role"
+        ]
+      },
+      "Action": [
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:BatchDeleteImage",
+        "ecr:BatchGetImage",
+        "ecr:CompleteLayerUpload",
+        "ecr:DeleteLifecyclePolicy",
+        "ecr:DeleteRepository",
+        "ecr:DeleteRepositoryPolicy",
+        "ecr:DescribeImages",
+        "ecr:DescribeRepositories",
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:GetLifecyclePolicy",
+        "ecr:GetLifecyclePolicyPreview",
+        "ecr:GetRepositoryPolicy",
+        "ecr:InitiateLayerUpload",
+        "ecr:ListImages",
+        "ecr:PutImage",
+        "ecr:PutLifecyclePolicy",
+        "ecr:SetRepositoryPolicy",
+        "ecr:StartLifecyclePolicyPreview",
+        "ecr:UploadLayerPart"
+      ]
+    },
+    {
+      "Sid": "LambdaECRImageRetrievalPolicy",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      },
+      "Action": [
+        "ecr:BatchGetImage",
+        "ecr:DeleteRepositoryPolicy",
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:GetRepositoryPolicy",
+        "ecr:SetRepositoryPolicy"
+      ],
+      "Condition": {
+        "StringLike": {
+          "aws:sourceArn": "arn:aws:lambda:us-east-1:597268614173:function:*"
+        }
+      }
+    }
+  ]
+}
+
+test
+
+docker run -p 9000:8080 -e AWS_LAMBDA_RUNTIME_API=http://localhost:9001 \pulled:latest
+
+
+curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{"body": {"s3url": ["s3://my-bucket/my-file.txt"]}}'
+
+
+{
+  "body": {
+    "s3url": [
+      "http://fake.url"
+    ]
+  }
+}
+
+
+
+
+
+# install functions dependencies
+RUN pip install -r ${FUNCTION_DIR}/requirements.txt --target ${FUNCTION_DIR}

@@ -1,7 +1,7 @@
 from kraken import binarization
 from PIL import Image
 from kraken import pageseg
-from utils import crop_and_s3ave, filter_small_boxes
+from utils import filter_small_boxes
 import os
 
 # might add custom model path to this so diff models can be selected
@@ -18,9 +18,8 @@ def segline_and_crop (img_path, fi_name = None, mime_type = None):
         bw_im = binarization.nlbin(im)
         seg = pageseg.segment(bw_im)
         comb_boxes = filter_small_boxes(seg['boxes'])
-        files = crop_and_s3ave(im, comb_boxes, fi_name)
-
-        return files
+        print(comb_boxes)
+        return comb_boxes
     
     else:
         fi_name = img_path.filename
@@ -31,6 +30,5 @@ def segline_and_crop (img_path, fi_name = None, mime_type = None):
         seg = pageseg.segment(bw_im)
         # filter small boxes and save
         comb_boxes = filter_small_boxes(seg['boxes'])
-        files = crop_and_s3ave(im, comb_boxes, fi_name)
-
-        return files
+        print(comb_boxes)
+        return comb_boxes

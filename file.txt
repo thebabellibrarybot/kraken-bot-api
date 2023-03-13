@@ -7,11 +7,11 @@ aws ecr-public get-login-password --region us-east-1 | docker login --username A
 
 
 
-aws ecr create-repository --repository-name slc_kraken --image-scanning-configuration scanOnPush=true --image-tag-mutability MUTABLE
+aws ecr create-repository --repository-name kraken-bot --image-scanning-configuration scanOnPush=true --image-tag-mutability MUTABLE
 
-docker tag  slc_kraken:latest 597268614173.dkr.ecr.us-east-1.amazonaws.com/slc_kraken:latest
+docker tag  kraken-bot:latest 597268614173.dkr.ecr.us-east-1.amazonaws.com/kraken-bot:latest
 
-docker push 597268614173.dkr.ecr.us-east-1.amazonaws.com/slc_kraken:latest        
+docker push 597268614173.dkr.ecr.us-east-1.amazonaws.com/kraken-bot:latest        
 
 
 

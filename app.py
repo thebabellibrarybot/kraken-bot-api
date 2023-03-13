@@ -10,7 +10,7 @@ def lambda_handler(event, context):
     print('ran')
 
     # return obj
-    ret_obj = defaultdict(list)
+    ret_obj = []
     body = event['body']
     print(body, 'body')
 
@@ -27,7 +27,7 @@ def lambda_handler(event, context):
                 fi_name = fi.split('.com/')[-1]
                 mimetype = fi.split('.')[-1]
                 i = segline_and_crop(fi_obj, fi_name, mimetype)
-                ret_obj['files'].append(i)
+                ret_obj.append(i)
         else:
             res = requests.get(req[0])
             fi_content = res.content
@@ -35,7 +35,7 @@ def lambda_handler(event, context):
             fi_name = req[0].split('.com/')[-1]
             mimetype = req[0].split('.')[-1]
             i = segline_and_crop(fi_obj, fi_name, mimetype)
-            ret_obj['files'].append(i)
+            ret_obj.append(i)
 
     else:
         err_msg = "Error: 's3url' list is empty"

@@ -1,6 +1,3 @@
-import os
-from aws_utils import upload_img_s3
-
 def filter_small_boxes(bboxes):
     """
     Removes any bounding boxes from the list that are 10% or less than the surface area of other bounding boxes in the array.
@@ -29,8 +26,6 @@ def filter_small_boxes(bboxes):
             filtered_bboxes.append(bbox)
 
     return filtered_bboxes
-
-def crop_and_s3ave(img, bboxes, fi_name):
     """
     Crops the image for each bounding box and saves the cropped images to the 'DATA/output/' directory.
 

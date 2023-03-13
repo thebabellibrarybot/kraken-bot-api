@@ -7,11 +7,11 @@ aws ecr-public get-login-password --region us-east-1 | docker login --username A
 
 
 
-aws ecr create-repository --repository-name kraken-bot --image-scanning-configuration scanOnPush=true --image-tag-mutability MUTABLE
+aws ecr create-repository --repository-name tester --image-scanning-configuration scanOnPush=true --image-tag-mutability MUTABLE
 
-docker tag  kraken-bot:latest 597268614173.dkr.ecr.us-east-1.amazonaws.com/kraken-bot:latest
+docker tag  tester:latest 597268614173.dkr.ecr.us-east-1.amazonaws.com/tester:latest
 
-docker push 597268614173.dkr.ecr.us-east-1.amazonaws.com/kraken-bot:latest        
+docker push 597268614173.dkr.ecr.us-east-1.amazonaws.com/tester:latest        
 
 
 
@@ -91,7 +91,7 @@ curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d
 {
   "body": {
     "s3url": [
-      "https://msm454.s3.amazonaws.com/fol.119_2R.jpg"
+      "https://zipzforlambda.s3.amazonaws.com/resized_image.jpg"
     ]
   }
 }

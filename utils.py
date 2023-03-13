@@ -9,6 +9,7 @@ def filter_small_boxes(bboxes):
     filtered_bboxes = []
     areas = []
     for bbox in bboxes:
+        print('bbox in fliter sm boxes', bbox)
         area = (bbox[2] - bbox[0]) * (bbox[3] - bbox[1])
         areas.append(area)
 

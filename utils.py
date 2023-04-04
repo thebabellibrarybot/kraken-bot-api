@@ -7,23 +7,23 @@ def filter_small_boxes(bboxes):
     """
     print('got to filter sml boxes')
     filtered_bboxes = []
-    areas = []
-    for bbox in bboxes:
-        print('bbox in fliter sm boxes', bbox)
-        area = (bbox[2] - bbox[0]) * (bbox[3] - bbox[1])
-        areas.append(area)
+    #areas = []
+    #for bbox in bboxes:
+    #    print('bbox in fliter sm boxes', bbox)
+    #    area = (bbox[2] - bbox[0]) * (bbox[3] - bbox[1])
+    #    areas.append(area)
 
     for i, bbox in enumerate(bboxes):
-        bbox_area = areas[i]
-        is_small = False
+        #bbox_area = areas[i]
+        #is_small = False
         for j, other_bbox in enumerate(bboxes):
-            if i == j:
-                continue
-            other_area = areas[j]
-            if bbox_area <= other_area * 0.1:
-                is_small = True
-                break
-        if not is_small:
+            #if i == j:
+            #    continue
+            #other_area = areas[j]
+            #if bbox_area <= other_area * 0.1:
+            #    is_small = True
+            #    break
+        #if not is_small:
             filtered_bboxes.append(bbox)
 
     return filtered_bboxes

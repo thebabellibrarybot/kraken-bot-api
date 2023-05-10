@@ -6,6 +6,7 @@ kraken, FROM public.ecr.aws/lambda/python:3.8
 ## params:
 - takes an s3url at size 800px
 - often will generate errs if the image has not already been cleanded (*** stills needs a cleanup function to account for this behavior)
+- cleaning api found at: https://github.com/thebabellibrarybot/yolo-tensor-14latin-bboxes-api
 
 ## returns:
  - only returns bbox coords
